@@ -1,0 +1,134 @@
+- Class: meta
+  Course: My New Course
+  Lesson: My First Lesson
+  Author: ztw
+  Type: Standard
+  Organization: bjtu
+  Version: 2.4.5
+
+- Class: text
+  Output: Duplicate values and Missing values play an important role in statistics and data analysis. Often, they must not be ignored, but rather they should be carefully studied to see if there's an underlying pattern or cause for their missingness.
+
+- Class: text
+  Output: In this lesson, we will learn to remove duplicate values and missing values.
+
+- Class: cmd_question
+  Output: Next we learn to remove duplicate values To illustrate, let's load the data to x by the read.table() function.
+  CorrectAnswer: x <- read.table("missing.CSV", header = TRUE, sep = ",", na.strings = "NA")
+  AnswerTests: omnitest(correctExpr='x <- read.table("missing.CSV", header = TRUE, sep = ",", na.strings = "NA")')
+  Hint: Use  to read.table() to load the missing.CSV
+
+- Class: cmd_question
+  Output: Now, use View() to view data
+  CorrectAnswer: View(x)
+  AnswerTests: omnitest(correctExpr='View(x)')
+  Hint: Try to View  data
+
+- Class: cmd_question
+  Output: Now, use unique() to remove duplicate values and pass the data to new_x
+  CorrectAnswer: new_x <- unique(x)
+  AnswerTests: omnitest(correctExpr='new_x <- unique(x)')
+  Hint: Use unique() to remove duplicate values
+
+- Class: cmd_question
+  Output: Now, use view() to view the new data
+  CorrectAnswer: View(new_x)
+  AnswerTests: omnitest(correctExpr='View(new_x)')
+  Hint: Try to view  data
+
+- Class: text
+  Output: Now we can see that the duplicate values have been removed.
+
+- Class: text
+  Output: Then we will learn to remove missing values. In R, NA is used to represent any value that is 'not available' or 'missing' (in the statistical sense). In this lesson, we'll explore missing values further.
+
+- Class: cmd_question
+  Output: We can use summary() to check if there are missing values in the file.
+  CorrectAnswer: summary(new_x)
+  AnswerTests: omnitest(correctExpr='summary(new_x)')
+  Hint: use summary() to check the data
+
+- Class: cmd_question
+  Output: Visualize with aggr() in vim
+  CorrectAnswer: aggr(new_x)
+  AnswerTests: omnitest(correctExpr='aggr(new_x)')
+  Hint: Try aggr(new_x)
+
+- Class: text
+  Output: You can see that the missing values are concentrated in the SO2 column, and then we will process the SO2 data
+
+- Class: cmd_question
+  Output: First,we can delete the missing values directly. Use na.omit() to process the data and pass the new data to new_x1
+  CorrectAnswer: new_x1 <- na.omit(new_x)
+  AnswerTests: omnitest(correctExpr='new_x1 <- na.omit(new_x)')
+  Hint: The function na.omit() can delete the missing values.
+
+- Class: cmd_question
+  Output: Visualize with aggr() in vim
+  CorrectAnswer: aggr(new_x1)
+  AnswerTests: omnitest(correctExpr='aggr(new_x1)')
+  Hint: Try aggr(new_x1)
+
+- Class: text
+  Output: Although there are no missing values in other columns, this is often not the case in practical applications, so when we fill in, we only choose the SO2 column.
+
+- Class: cmd_question
+  Output: First,process the new_x to new_x2
+  CorrectAnswer: new_x2 <- new_x
+  AnswerTests: omnitest(correctExpr='new_x2 <- new_x')
+  Hint: Try new_x2 <- new_x 
+
+- Class: cmd_question
+  Output: Then,use the average method to fill the column so2.Use the mean() function.
+  CorrectAnswer: new_x2$SO2[is.na(new_x2$SO2)] = mean(new_x2$SO2, na.rm = TRUE)
+  AnswerTests: omnitest(correctExpr='new_x2$SO2[is.na(new_x2$SO2)] = mean(new_x2$SO2, na.rm = TRUE)')
+  Hint: The is.na() function is to judge the missing values.Try new_x2$SO2[is.na(new_x2$SO2)] = mean(new_x2$SO2, na.rm = TRUE).
+
+- Class: text
+  Output: Then use  median method to fill.
+
+- Class: cmd_question
+  Output: First,process the new_x to new_x3
+  CorrectAnswer: new_x3 <- new_x
+  AnswerTests: omnitest(correctExpr='new_x3 <- new_x')
+  Hint: Try new_x3 <- new_x 
+
+- Class: cmd_question
+  Output: Then,use the median method to fill the column so2.Use the median() function.
+  CorrectAnswer: new_x3$SO2[is.na(new_x3$SO2)] = median(new_x3$SO2, na.rm = TRUE)
+  AnswerTests: omnitest(correctExpr='new_x3$SO2[is.na(new_x3$SO2)] = median(new_x3$SO2, na.rm = TRUE)')
+  Hint: Try new_x3$SO2[is.na(new_x3$SO2)] = median(new_x3$SO2, na.rm = TRUE).
+
+- Class: text
+  Output: Finally, use  mode method to fill.
+
+- Class: cmd_question
+  Output: First,process the new_x to new_x4
+  CorrectAnswer: new_x4 <- new_x
+  AnswerTests: omnitest(correctExpr='new_x4 <- new_x')
+  Hint: Try new_x4 <- new_x 
+
+- Class: cmd_question
+  Output: Then,use the table() function to count the occurrences of the SO2 column value.
+  CorrectAnswer: table(new_x4$SO2)
+  AnswerTests: omnitest(correctExpr='table(new_x4$SO2)')
+  Hint: Try table(new_x4$SO2) 
+
+- Class: cmd_question
+  Output: Finally,use the impute method to fill the column so2.
+  CorrectAnswer: new_x4$SO2 = impute(new_x4$SO2, "9")
+  AnswerTests: omnitest(correctExpr='new_x4$SO2 = impute(new_x4$SO2, "9")')
+  Hint: Try new_x4$SO2 = impute(new_x4$SO2, "9")
+
+- Class: cmd_question
+  Output: Now that we've got NAs down pat, let's look at a second type of missing value -- NaN, which stands for 'not a number'. To generate NaN, try dividing (using a forward slash) 0 by 0 now.
+  CorrectAnswer: 0/0
+  AnswerTests: omnitest(correctExpr='0/0')
+  Hint: Try 0/0.
+
+- Class: cmd_question
+  Output: Let's do one more, just for fun. In R, Inf stands for infinity. What happens if you subtract Inf from Inf?
+  CorrectAnswer: Inf - Inf
+  AnswerTests: omnitest(correctExpr='Inf - Inf')
+  Hint: Type Inf - Inf. Can you guess the result?
+
